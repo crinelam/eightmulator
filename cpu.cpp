@@ -1,6 +1,6 @@
 #include "cpu.h"
 
-void Cpu::init() {
+void Cpu::init(bool print) {
     srand((uint32_t) time(0));
 
     // start of program memory 0x000 to 0x1FF reserved for interpreter mem
@@ -33,6 +33,8 @@ void Cpu::init() {
         memory[i] = c;
         i++;
     }
+
+    printInfo = print;
 }
 
 void Cpu::incrementProgramCounter() {
@@ -57,12 +59,17 @@ void Cpu::cycle() {
     uint8_t mode;
     uint8_t pixel;
 
-    
-    printf("pc: %.4X opcode: %.4X sp: %.2X regs: ", programCounter, opcode, stackPointer);
-    for (int i = 0; i < 15; i++) {
-        printf("%.2X ", registers[i]);
+    if (printInfo) {
+        printf("pc: %.4X opcode: %.4X sp: %.2X regs: ", programCounter, opcode, stackPointer);
+        for (int i = 0; i < 15; i++) {
+            printf("%.2X ", registers[i]);
+        }
+        printf("keys: ");
+        for (int i = 0; i < 15; i++) {
+            printf("%.2X ", keys[i]);
+        }
+        printf("\n");
     }
-    printf("\n");
     
 
     switch(first) {

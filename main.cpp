@@ -13,6 +13,25 @@ SDL_Renderer* renderer;
 SDL_Window* window;
 SDL_Texture* texture;
 
+const int keymap[16] = {
+    SDL_SCANCODE_X,
+    SDL_SCANCODE_1,
+    SDL_SCANCODE_2,
+    SDL_SCANCODE_3,
+    SDL_SCANCODE_Q,
+    SDL_SCANCODE_W,
+    SDL_SCANCODE_E,
+    SDL_SCANCODE_A,
+    SDL_SCANCODE_S,
+    SDL_SCANCODE_D,
+    SDL_SCANCODE_Z,
+    SDL_SCANCODE_C,
+    SDL_SCANCODE_4,
+    SDL_SCANCODE_R,
+    SDL_SCANCODE_F,
+    SDL_SCANCODE_V
+};
+
 Cpu cpu;
 
 void init() {
@@ -56,7 +75,7 @@ int main(int argc, char *argv[]) {
     try {
         init();
 
-        cpu.init();
+        cpu.init(true);
 
         char* filename = argv[1];
 
@@ -79,7 +98,19 @@ int main(int argc, char *argv[]) {
                     case SDL_QUIT: 
                         keepOpen = false;
                         break;
-                    //TODO: key presses
+                    case SDL_KEYDOWN:
+                        for(int i = 0; i < 16; i++) {
+                            if (e.key.keysym.scancode == keymap[i]) {
+                                cpu.keys[i] = 1;
+                            }
+                        }
+                        break;
+                    case SDL_KEYUP:
+                        for(int i = 0; i < 16; i++) {
+                            if (e.key.keysym.scancode == keymap[i]) {
+                                cpu.keys[i] = 0;
+                            }
+                        }
                 }
             }
 

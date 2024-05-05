@@ -41,8 +41,10 @@ public:
     0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
     0xF0, 0x80, 0xF0, 0x80, 0x80  // F
     };
+
+    bool printInfo;
     
-    void init();
+    void init(bool print);
     void incrementProgramCounter();
     void cycle();
 };
