@@ -267,6 +267,7 @@ void Cpu::cycle() {
                 if (!keyPressed) {
                     return;
                 }
+                incrementProgramCounter();
                 break;
             } else if (mode == 0x15) { // Fx15 - LD DT, Vx; Set delay timer = Vx
                 delayTimer = registers[Vx];
