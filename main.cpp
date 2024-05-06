@@ -49,10 +49,13 @@ void init() {
     // 64 x 32 texture
     texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, 64, 32);
     if (texture == NULL) { throw std::runtime_error("TEXTURE CREATION FAILED."); }
+
+    cpu.init(true);
 }
 
 void deinit() {
-    //SDL_DestroyWindow(window);
+    cpu.deinit();
+    SDL_DestroyWindow(window);
     SDL_Quit();
 }
 
@@ -74,9 +77,7 @@ void loadROM(char *filename) {
 int main(int argc, char *argv[]) {
     try {
         init();
-
-        cpu.init(true);
-
+        
         char* filename = argv[1];
 
         if (filename == NULL) {

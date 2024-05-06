@@ -3,6 +3,8 @@
 #include <ctime>
 #include <iostream>
 
+#include "audio.cpp"
+
 class Cpu {
 private:
     
@@ -43,8 +45,12 @@ public:
     };
 
     bool printInfo;
+
+    Audio audio;
+    bool audioPlaying;
     
     void init(bool print);
+    void deinit();
     void incrementProgramCounter();
     void cycle();
 };

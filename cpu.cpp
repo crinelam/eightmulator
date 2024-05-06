@@ -35,6 +35,16 @@ void Cpu::init(bool print) {
     }
 
     printInfo = print;
+
+    audioPlaying = false;
+    SDL_Init(SDL_INIT_AUDIO);
+    audio.open();
+    audio.setVol(0.25);
+    audio.setFreq(392.00);
+}
+
+void Cpu::deinit() {
+    audio.close();
 }
 
 void Cpu::incrementProgramCounter() {
@@ -68,6 +78,7 @@ void Cpu::cycle() {
         for (int i = 0; i < 15; i++) {
             printf("%.2X ", keys[i]);
         }
+        printf("delay: %X sound: %X", delayTimer, soundTimer);
         printf("\n");
     }
     
@@ -286,6 +297,13 @@ void Cpu::cycle() {
     }
 
     if (soundTimer > 0) {
+        if (!audioPlaying) {
+            audioPlaying = true;
+            audio.play();
+        }
         soundTimer--;
+    } else if (audioPlaying) {
+        audioPlaying = false;
+        audio.stop();
     }
 }
